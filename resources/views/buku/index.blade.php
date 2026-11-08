@@ -1,7 +1,7 @@
 <x-app-layout>
 <div class="container bagian-buku">
     <h2 class="judul" style="font-size: 1.8rem; margin-bottom: 20px; font-weight: 900;">
-    @can('kelola data buku')
+    @can('kelola-buku')
         Pengelolaan Data Buku
     @else
         Daftar Buku Perpustakaan
@@ -11,7 +11,7 @@
     <div id="alertSuccess" class="alert-notif alert-sukses" style="display:none;"></div>
     <div id="alertError" class="alert-notif alert-bahaya" style="display:none;"></div>
 
-    @can('kelola data buku')
+    @can('kelola-buku')
     <div class="form-container-buku">
         <h3 id="formTitle">Tambah Buku Baru</h3>
         <form id="formBuku">
@@ -77,7 +77,7 @@
 <script>
     const API_URL = '/api/buku';
     let dataBukuGlobal = []; 
-    const canKelolaBuku = @json(auth()->user()->can('kelola data buku'));
+    const canKelolaBuku = @json(auth()->user()->can('kelola-buku'));
 
     document.addEventListener('DOMContentLoaded', loadBuku);
 
@@ -125,7 +125,6 @@
                         <button type="button" class="btn-aksi-hapus" onclick="deleteBuku(${item.id})">Hapus</button>
                     `;
                 } else {
-                    
                     tombolKelola = `
                         <button type="button" class="btn-primary" onclick="pinjamBuku(${item.id})">Pinjam</button>
                     `;
@@ -134,7 +133,7 @@
                 tbody.innerHTML += `
                     <tr>
                         <td>${item.kategori}</td>
-                        <td style="font-weight: 700; color: #0f172a;">${item.judul}</td>
+                        <td style="font-weight: 700; color: #0f172a;">${new Option(item.judul).innerHTML}</td>
                         <td>${item.penulis}</td>
                         <td>${item.tahun_terbit}</td>
                         <td style="text-align: center;">
