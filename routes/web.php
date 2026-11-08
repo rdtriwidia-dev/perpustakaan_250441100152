@@ -46,10 +46,13 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/buku', [BukuController::class, 'index'])->name('buku.index');
         Route::get('/buku/{id}', [BukuController::class, 'detail'])->name('buku.detail');
 
-        // CELAH A2 SQL INJECTION (Tambahkan baris ini):
+        // CELAH A2 SQL INJECTION 
         Route::get('/buku-cari', [BukuController::class, 'cari'])->name('buku.cari');
-        // CELAH A3 CSRF: Rute penghapusan berbasis GET (vulnerable)
-        Route::middleware('auth')->get('/buku/{buku}/hapus', [BukuController::class, 'destroy']);
+        // CELAH A3 CSRF
+        // Route::middleware('auth')->get('/buku/{buku}/hapus', [BukuController::class, 'destroy']);
+        // Menghapus rute GET dan menggantinya dengan rute HTTP DELETE
+        Route::delete('/buku/{id}', [BukuController::class, 'destroy'])->name('buku.destroy');
+
         Route::middleware('auth')->get('/peminjaman/{id}', [PeminjamanController::class, 'show']);
     });
 

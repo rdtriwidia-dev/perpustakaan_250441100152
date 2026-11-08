@@ -58,12 +58,10 @@
                 </tr>
             </thead>
             <tbody id="tabelBukuBody">
-                <tbody id="tabelBukuBody">
                     @foreach($bukus as $buku)
                         <tr style="border-bottom: 1px solid #ddd; text-align: left;">
                             <td style="padding: 10px;">{{ $buku->kategori_id }}</td>
-                        <!-- LETAK CELAH A1 XSS (Menggunakan {!! !!} tanpa escaping) -->
-                            <td style="padding: 10px; font-weight: 700; color: #0f172a;">{!! $buku->judul !!}</td>
+                            <td style="padding: 10px; font-weight: 700; color: #0f172a;">{{ $buku->judul }}</td>
                             <td style="padding: 10px;">{{ $buku->penulis }}</td>
                             <td style="padding: 10px;">{{ $buku->tahun_terbit }}</td>
                             <td style="padding: 10px; text-align: center;">
@@ -71,7 +69,6 @@
                             </td>
                         </tr>
                     @endforeach
-                </tbody>
             </tbody>
         </table>
     </div>

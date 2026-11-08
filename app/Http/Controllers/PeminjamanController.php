@@ -78,10 +78,10 @@ class PeminjamanController extends Controller
     }
 
     public function show($id)
-{
-    // Celah A4 IDOR: Mengambil data tanpa mengecek ($user->id === $peminjaman->anggota_id)
-    $peminjaman = Peminjaman::with(['user', 'buku'])->findOrFail($id);
+    {
+    // Celah A4 IDOR: Mengambil data tanpa mengecek 
+        $peminjaman = Peminjaman::with(['user', 'buku'])->findOrFail($id);
 
-    return view('peminjaman.show', compact('peminjaman'));
-}
+        return view('peminjaman.show', compact('peminjaman'));
+    }
 }
