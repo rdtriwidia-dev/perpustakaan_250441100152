@@ -133,7 +133,7 @@
                 tbody.innerHTML += `
                     <tr>
                         <td>${item.kategori}</td>
-                        <td style="font-weight: 700; color: #0f172a;">${new Option(item.judul).innerHTML}</td>
+                        <td style="font-weight: 600; color: #0f172a;">${new Option(item.judul).innerHTML}</td>
                         <td>${item.penulis}</td>
                         <td>${item.tahun_terbit}</td>
                         <td style="text-align: center;">
