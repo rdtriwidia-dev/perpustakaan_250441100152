@@ -227,25 +227,45 @@
     }
 
     async function deleteBuku(id) {
-        if (!canKelolaBuku) return;
-        if (!confirm('Apakah Anda yakin ingin menghapus buku ini?')) return;
+    if (!canKelolaBuku) return;
+    if (!confirm('Apakah Anda yakin ingin menghapus buku ini?')) return;
 
-        try {
-            const response = await fetch(`${API_URL}/${id}`, {
-                method: 'DELETE',
-                headers: {
-                    'Accept': 'application/json'
-                }
-            });
+    try {
+        const response = await fetch(`/buku/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            }
+        });
 
-            if (!response.ok) throw new Error('Gagal menghapus data.');
+        if (response.ok) {
+            let successMsg = 'Buku berhasil dihapus!';
+            try {
+                const resData = await response.json();
+                if (resData.message) successMsg = resData.message;
+            } catch (e) {}
 
-            showAlert('Buku berhasil dihapus!');
-            loadBuku(); 
-        } catch (error) {
-            showAlert(error.message, true);
+            showAlert(successMsg, false);
+
+            setTimeout(() => {
+                window.location.reload();
+            }, 1200);
+            return;
         }
+
+        let errorMsg = 'Gagal menghapus data.';
+        try {
+            const errData = await response.json();
+            errorMsg = errData.message || errorMsg;
+        } catch (e) {}
+
+        showAlert(errorMsg, true);
+    } catch (error) {
+        showAlert(error.message, true);
     }
+}
 
     async function pinjamBuku(bukuId) {
     if (!confirm('Apakah kamu yakin ingin mengajukan peminjaman buku ini?')) return;

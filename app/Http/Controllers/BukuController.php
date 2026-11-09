@@ -80,6 +80,9 @@ class BukuController extends Controller
         $buku = Buku::findOrFail($id);
         $buku->delete();
 
-        return redirect('/buku')->with('success', 'Buku berhasil dihapus');
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Buku berhasil dihapus!'
+        ], 200);
     }
 }

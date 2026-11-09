@@ -88,4 +88,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// Route::get('/test-error', function () {
+//     throw new \RuntimeException('Uji Error Aplikasi');
+//     });
 require __DIR__.'/auth.php';
