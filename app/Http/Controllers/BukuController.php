@@ -68,6 +68,8 @@ class BukuController extends Controller
     {
         $judul = $request->query('judul');
 
+        // $buku = DB::select("SELECT * FROM bukus WHERE judul = '$judul'");
+
     // Pake Parameter Binding (?) buat misahkan logika SQL dan data
         $buku = DB::select("SELECT * FROM bukus WHERE judul = ?", [$judul]);
 
