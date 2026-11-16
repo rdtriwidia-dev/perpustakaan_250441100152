@@ -5,12 +5,13 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\PermissionRegistrar;
 
 class RolePermissionSeeder extends Seeder
 {
     public function run(): void
     {
-        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+        app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         $permissions = [
             'akses dashboard admin',
@@ -28,12 +29,17 @@ class RolePermissionSeeder extends Seeder
         ];
 
         foreach ($permissions as $permission) {
-            Permission::findOrCreate($permission, 'web');
+            Permission::firstOrCreate([
+                'name' => $permission,
+                'guard_name' => 'web',
+            ]);
         }
 
-        $roleAdmin = Role::findOrCreate('admin', 'web');
-        $rolePetugas = Role::findOrCreate('petugas', 'web');
-        $roleSiswa = Role::findOrCreate('siswa', 'web');
+        app()[PermissionRegistrar::class]->forgetCachedPermissions();
+
+        $roleAdmin = Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'web']);
+        $rolePetugas = Role::firstOrCreate(['name' => 'petugas', 'guard_name' => 'web']);
+        $roleSiswa = Role::firstOrCreate(['name' => 'siswa', 'guard_name' => 'web']);
 
         $roleAdmin->syncPermissions([
             'akses dashboard admin',
